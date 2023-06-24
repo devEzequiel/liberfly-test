@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\V1\Book;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Book\CreateBookRequest;
+use App\Http\Requests\Book\FilterBookRequest;
 use App\Services\Book\BookService;
+use Illuminate\Http\JsonResponse;
+use Exception;
 
 class BookController extends Controller
 {
@@ -12,12 +16,15 @@ class BookController extends Controller
     }
 
     /**
-     * Display a listing of the books.
-     *
-     * @param FilterBooksRequest $request
-     * @return JsonResponse
+     * @OA\Get(
+     *     path="/api/v1/books",
+     *     operationId="getBookssList",
+     *     tags={"Books"},
+     *     summary="Get list of books",
+     *     @OA\Response(response="200", description="List of books"),
+     * )
      */
-    public function all(FilterBooksRequest $request): JsonResponse
+    public function all(FilterBookRequest $request): JsonResponse
     {
         try {
             $filters = $request->validated();
@@ -30,10 +37,25 @@ class BookController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param CreateBookRequest $request
-     * @return JsonResponse
+     * @OA\Post(
+     *     path="/api/v1/books",
+     *     operationId="createBook",
+     *     tags={"Books"},
+     *     summary="Create a new book",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="category_id", type="number"),
+     *             @OA\Property(property="type_id", type="number"),
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="author", type="string"),
+     *             @OA\Property(property="code", type="string"),
+     *             @OA\Property(property="size", type="number"),
+     *         ),
+     *     ),
+     *     @OA\Response(response="201", description="Book created successfully"),
+     *     @OA\Response(response="422", description="Invalid input"),
+     * )
      */
     public function store(CreateBookRequest $request): JsonResponse
     {
@@ -42,7 +64,7 @@ class BookController extends Controller
 
             $this->bookService->create($data);
 
-            return $this->responseCreated('Livro adicionado');
+            return $this->responseCreated('Brook created successfully');
         } catch (Exception $e) {
             return $this->responseUnprocessableEntity($e->getMessage());
         }
@@ -61,42 +83,6 @@ class BookController extends Controller
 
             return $this->responseOk($book);
         } catch (Exception $e) {
-            return $this->responseUnprocessableEntity($e->getMessage());
-        }
-    }
-
-    /**
-     * Update the specified book.
-     *
-     * @param UpdateBookRequest $request
-     * @return JsonResponse
-     */
-    public function update(UpdateBookRequest $request): JsonResponse
-    {
-        try {
-            $data = $request->validated();
-
-            $this->bookService->update($data);
-
-            return $this->responseCreated('Livro atualizado');
-        } catch (Exception $e) {
-            return $this->responseUnprocessableEntity($e->getMessage());
-        }
-    }
-
-    /**
-     * Remove the specified book from storage.
-     *
-     * @param  int  $id
-     * @return JsonResponse
-     */
-    public function destroy($id): JsonResponse
-    {
-        try {
-            $this->bookService->delete($id);
-
-            return $this->responseAccepted();
-        } catch (\Exception $e) {
             return $this->responseUnprocessableEntity($e->getMessage());
         }
     }

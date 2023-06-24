@@ -87,39 +87,4 @@ class BookService extends BaseService
             throw $e;
         }
     }
-
-    /**
-     * @param int $id
-     * @return bool
-     * @throws Exception
-     */
-    public function delete(int $id): bool
-    {
-        try {
-            $book = $this->book::find($id);
-
-            if (!$book) {
-                throw new Exception('Livro não encontrado');
-            }
-
-            return (bool)$book->delete();
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    public function update(array $data)
-    {
-        try {
-            $book = $this->book::find((int)$data['id']);
-
-            if (!$book) {
-                throw new Exception('Livro não encontrado');
-            }
-
-            return (bool)$book->update($data);
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
 }
