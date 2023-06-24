@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
@@ -34,7 +36,7 @@ class Controller extends BaseController
      */
     public function responseAccepted(string $message = 'success'): JsonResponse
     {
-        return response()->json(['message' => $message], ResponseAlias::HTTP_ACCEPTED);
+        return response()->json(['message' => $message], Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -50,7 +52,7 @@ class Controller extends BaseController
      */
     public function responseForbidden(): JsonResponse
     {
-        return response()->json(null, Response::HTTP_FORBIDDEN);
+        return response()->json(null, ResponseAlias::HTTP_FORBIDDEN);
     }
 
     /**
