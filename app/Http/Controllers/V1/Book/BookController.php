@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1\Book;
 
 use App\Http\Controllers\Controller;
+use App\Services\Book\BookService;
 
 class BookController extends Controller
 {
