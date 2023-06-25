@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     require_once('modules/book.php');
     require_once('modules/category.php');
+    require_once('modules/auth.php');
 });
 
 require_once('modules/utils.php');

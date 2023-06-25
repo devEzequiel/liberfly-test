@@ -23,6 +23,7 @@ class  CategoryController extends Controller
      *     tags={"Categories"},
      *     summary="Get list of categories",
      *     @OA\Response(response="200", description="List of categories"),
+     *     security={{"bearerAuth": {}}}
      * )
      */
     public function list(): JsonResponse
@@ -53,6 +54,7 @@ class  CategoryController extends Controller
      *     ),
      *     @OA\Response(response="201", description="Book created successfully"),
      *     @OA\Response(response="422", description="Invalid input"),
+     *     security={{"bearerAuth": {}}}
      * )
      */
     public function store(CreateCategoryRequest $request): JsonResponse

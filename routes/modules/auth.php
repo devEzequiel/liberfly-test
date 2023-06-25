@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::controller(\App\Http\Controllers\Api\Auth\AuthController::class)
+Route::controller(\App\Http\Controllers\V1\Auth\AuthController::class)
     ->name('auth.')
     ->group(function () {
-        Route::get('/login', 'postAuth')->name('login');
-        Route::get('/signup', 'healthCheck')->name('signup');
+        Route::post('/login', 'postLogin')->name('login');
+        Route::post('/signup', 'postSignUp')->name('signup');
     });

@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService extends BaseService
 {
-    public function __construct(protected User $book)
+    public function __construct(protected User $user)
     {
     }
 
@@ -18,7 +18,7 @@ class AuthService extends BaseService
      */
     public function authenticate($data): array
     {
-        $user = $this->model::where('email', $data['email'])->first();
+        $user = $this->user::where('email', $data['email'])->first();
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw ValidationException::withMessages([
@@ -33,7 +33,7 @@ class AuthService extends BaseService
     public function createUser($data)
     {
         $data['password'] = bcrypt($data['password']);
-        $user = $this->create($data);
+        $user = $this->user::create($data);
 
         if(!$user) {
             throw new \Exception('Email already registered');

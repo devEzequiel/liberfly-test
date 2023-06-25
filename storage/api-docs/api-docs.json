@@ -5,6 +5,77 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "operationId": "Login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successfull"
+                    },
+                    "401": {
+                        "description": "Login error"
+                    }
+                }
+            }
+        },
+        "/api/v1/signup": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Create a new user",
+                "operationId": "SignUp",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully"
+                    },
+                    "422": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
         "/api/v1/books": {
             "get": {
                 "tags": [
@@ -16,7 +87,12 @@
                     "200": {
                         "description": "List of books"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -60,7 +136,12 @@
                     "422": {
                         "description": "Invalid input"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/books/{id}": {
@@ -121,7 +202,12 @@
                     "404": {
                         "description": "Book not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/categories": {
@@ -135,7 +221,12 @@
                     "200": {
                         "description": "List of categories"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -164,7 +255,21 @@
                     "422": {
                         "description": "Invalid input"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

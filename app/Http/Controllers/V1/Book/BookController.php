@@ -22,6 +22,7 @@ class BookController extends Controller
      *     tags={"Books"},
      *     summary="Get list of books",
      *     @OA\Response(response="200", description="List of books"),
+     *     security={{"bearerAuth": {}}}
      * )
      */
     public function all(FilterBookRequest $request): JsonResponse
@@ -55,6 +56,7 @@ class BookController extends Controller
      *     ),
      *     @OA\Response(response="201", description="Book created successfully"),
      *     @OA\Response(response="422", description="Invalid input"),
+     *     security={{"bearerAuth": {}}}
      * )
      */
     public function store(CreateBookRequest $request): JsonResponse
@@ -99,7 +101,8 @@ class BookController extends Controller
      *     @OA\Response(
      *         response="404",
      *         description="Book not found",
-     *     )
+     *     ),
+     *      security={{"bearerAuth": {}}}
      * )
      */
     public function show(int $id): JsonResponse
