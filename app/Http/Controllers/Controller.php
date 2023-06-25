@@ -9,7 +9,20 @@ use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @OA\Info(title="Liberfly API - Test", version="1.0.0")
+ * @OA\Info(
+ *     title="Liberfly API - Test",
+ *     version="1.0.0"
+ * )
+ *
+ * *@OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     in="header",
+ *     description="Acess token obtido no login",
+ *     name="Authorization",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
+ * )
  */
 class Controller extends BaseController
 {

@@ -31,10 +31,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Login successfull"
+                        "description": "success"
                     },
                     "401": {
-                        "description": "Login error"
+                        "description": "error"
                     }
                 }
             }
@@ -268,6 +268,9 @@
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
+                "description": "Acess token obtido no login",
+                "name": "Authorization",
+                "in": "header",
                 "bearerFormat": "JWT",
                 "scheme": "bearer"
             }

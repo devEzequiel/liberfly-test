@@ -34,13 +34,6 @@ class AuthController extends Controller
      *     @OA\Response(response="200", description="success"),
      *     @OA\Response(response="401", description="error"),
      * ),
-     *
-     * @OA\SecurityScheme(
-     *     securityScheme="bearerAuth",
-     *     type="http",
-     *     scheme="bearer",
-     *     bearerFormat="JWT"
-     * )
      */
     public function postLogin(LoginRequest $request): JsonResponse
     {
