@@ -1,66 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Uma api em laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Para corresponder a pedida do teste, desenvolvi uma api com a temática Livros, onde há a possibilidade de adicionar
+novos
+livros, com categoria, número de páginas, tipo (físico ou digital), autor do livro e código. Acredito que consegui
+demonstrar
+um pouco do meu know-how em Laravel e desenvolvimento de api.
 
-## About Laravel
+## Detalhes importantes
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Para facilitar a instalação e teste da api, eu adicionei o docker.
+- Criei algumas seeders para popular o banco de dados desde o início, mas encorajo-vos a adicionar seus próprios dados
+  para testar rotas de POST
+- Utilizei a metodologia de Git Flow para entenderem um pouco de como eu "commito" e etc.
+- Criei uma camada de service para isolar a regra de negócio e não poluir os controllers.
+- Utilizei o swagger, conforme solicitado.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Docker:
+- [Docker para ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+- [Docker para windows](https://docs.docker.com/desktop/install/windows-install/)
 
-## Learning Laravel
+Caso queria utilizar o WSL2, no windows, acesse [aqui](https://docs.docker.com/desktop/wsl/).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Rodando a Api
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Clone o repositório e copie o env:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+`$ git clone https://github.com/devEzequiel/liberfly-test` <br />
+`$ cd liberfly-test` <br />
+`$ cp .env.example .env` <br />
 
-## Laravel Sponsors
+Verifique se a porta Local 8989 está disponível <br />.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Então, suba o container, instale as dependecias e etc:
 
-### Premium Partners
+1. `$ docker-compose up -d`
+2. `$ docker exec -it "liberfly-app-1" bash`
+3. `$ composer install`
+4. `$ php artisan migrate:fresh --seed`
+5. `$ php artisan key:generate`
+6. `$ php artisan l5-swagger:generate`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Assim a api está funcionando em `localhost:8989` e a documentação em `localhost:8989/api/documentation`
 
-## Contributing
+## Auth
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+As únicas rotas livres são as de Login e Cadastro (signup).
+Para acessar as demais, é necessário um **Bearer Token** que é retornado no Response do Login.
+<br />
 
-## Code of Conduct
+Pode utilizar o login abaixo para testes, caso queria:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+``` json
+{
+  "email": "user@test.com",
+  "password": "test123"
+}
+```
 
-## Security Vulnerabilities
+Existem algumas categorias de livros já criadas, caso queria utilizar:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+``` json
+{
+    "id": 1,
+    "name": "romance",
+    "slug": "romance"
+},
+{
+    "id": 2,
+    "name": "ficção",
+    "slug": "ficcao"
+},
+{
+    "id": 3,
+    "name": "fantasia",
+    "slug": "fantasia"
+},
+{
+    "id": 4,
+    "name": "mistério",
+    "slug": "misterio"
+}
+```
 
-## License
+e os tipos de arquivos (file_type) são:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+``` json
+{
+    "id": 1,
+    "name": "physical"
+},
+{
+    "id": 2,
+    "name": "digital"
+}
+```
