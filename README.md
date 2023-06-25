@@ -37,7 +37,7 @@ Certifique-se que a porta Local 3306 (MySQL) esteja disponível <br />.
 Então, suba o container, instale as dependecias e etc:
 
 1. `$ docker-compose up -d`
-2. `$ docker exec -it "liberfly-app-1" bash`
+2. `$ docker exec -it "liberfly-test-app-1" bash`
 3. `$ composer install`
 4. `$ php artisan migrate:fresh --seed`
 5. `$ php artisan key:generate`
