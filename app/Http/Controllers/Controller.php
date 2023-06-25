@@ -8,6 +8,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Info(title="Liberfly API - Test", version="1.0.0")
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
