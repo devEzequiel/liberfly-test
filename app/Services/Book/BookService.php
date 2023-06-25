@@ -19,18 +19,18 @@ class BookService extends BaseService
      */
     public function list(array $filters): array
     {
-        $books = tap($this->book::query()
+        $books = $this->book::query()
             ->with('category', 'type')
             ->filter($filters)
-            ->paginate(10))->transform(fn($book) => [
-            'id' => $book->id,
-            'name' => $book->name,
-            'code' => $book->code,
-            'size' => $book->size . ' pages',
-            'created_at' => $book->created_at,
-            'category' => $book->category->name ?? null,
-            'type' => $book->type->description
-        ])->toArray();
+            ->get()->transform(fn($book) => [
+                'id' => $book->id,
+                'name' => $book->name,
+                'code' => $book->code,
+                'size' => $book->size . ' pages',
+                'created_at' => $book->created_at,
+                'category' => $book->category->name ?? null,
+                'type' => $book->type->description
+            ])->toArray();
 
         if (empty($books)) {
             throw new Exception('Nenhum livro encontrado');
