@@ -70,10 +70,37 @@ class BookController extends Controller
     }
 
     /**
-     * Display the specified book.
-     *
-     * @param int $id
-     * @return JsonResponse
+     * @OA\Get(
+     *     path="/api/v1/books/{id}",
+     *     operationId="getBookById",
+     *     tags={"Books"},
+     *     summary="Get book by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the book",
+     *         required=true,
+     *         @OA\Schema(type="integer", format="int64")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="id", type="integer", format="int64"),
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="code", type="string"),
+     *             @OA\Property(property="size", type="string"),
+     *             @OA\Property(property="created_at", type="string", format="date-time"),
+     *             @OA\Property(property="category", type="string"),
+     *             @OA\Property(property="type", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Book not found",
+     *     )
+     * )
      */
     public function show(int $id): JsonResponse
     {
@@ -82,7 +109,7 @@ class BookController extends Controller
 
             return $this->responseOk($book);
         } catch (Exception $e) {
-            return $this->responseUnprocessableEntity($e->getMessage());
+            return $this->responseNotFound($e->getMessage());
         }
     }
 }
