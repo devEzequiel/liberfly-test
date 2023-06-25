@@ -61,7 +61,6 @@ class BookController extends Controller
     {
         try {
             $data = $request->validated();
-
             $this->bookService->create($data);
 
             return $this->responseCreated('Brook created successfully');

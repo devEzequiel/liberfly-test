@@ -19,28 +19,24 @@ class BookService extends BaseService
      */
     public function list(array $filters): array
     {
-        try {
-            $books = tap($this->book::query()
-                ->with('category', 'type')
-                ->filter($filters)
-                ->paginate(10))->transform(fn($book) => [
-                'id' => $book->id,
-                'name' => $book->name,
-                'code' => $book->code,
-                'size' => $book->size . ' pages',
-                'created_at' => $book->created_at,
-                'category' => $book->category->name ?? null,
-                'type' => $book->type->description
-            ])->toArray();
+        $books = tap($this->book::query()
+            ->with('category', 'type')
+            ->filter($filters)
+            ->paginate(10))->transform(fn($book) => [
+            'id' => $book->id,
+            'name' => $book->name,
+            'code' => $book->code,
+            'size' => $book->size . ' pages',
+            'created_at' => $book->created_at,
+            'category' => $book->category->name ?? null,
+            'type' => $book->type->description
+        ])->toArray();
 
-            if (empty($books)) {
-                throw new Exception('Nenhum livro encontrado');
-            }
-
-            return (array)$books;
-        } catch (Exception $e) {
-            throw $e;
+        if (empty($books)) {
+            throw new Exception('Nenhum livro encontrado');
         }
+
+        return (array)$books;
     }
 
     /**
@@ -50,11 +46,7 @@ class BookService extends BaseService
      */
     public function create(array $data): bool
     {
-        try {
-            return (bool)$this->book::create($data);
-        } catch (Exception $e) {
-            throw $e;
-        }
+        return (bool)$this->book::create($data);
     }
 
     /**
@@ -64,27 +56,23 @@ class BookService extends BaseService
      */
     public function getBook(int $id): array
     {
-        try {
-            $book = $this->book::query()
-                ->where('id', $id)
-                ->with('category', 'type')
-                ->get()->map(fn($book) => [
-                    'id' => $book->id,
-                    'name' => $book->name,
-                    'code' => $book->code,
-                    'size' => $book->size . ' pages',
-                    'created_at' => $book->created_at,
-                    'category' => $book->category->name ?? null,
-                    'type' => $book->type->description
-                ])->toArray();
+        $book = $this->book::query()
+            ->where('id', $id)
+            ->with('category', 'type')
+            ->get()->map(fn($book) => [
+                'id' => $book->id,
+                'name' => $book->name,
+                'code' => $book->code,
+                'size' => $book->size . ' pages',
+                'created_at' => $book->created_at,
+                'category' => $book->category->name ?? null,
+                'type' => $book->type->description
+            ])->toArray();
 
-            if (!$book) {
-                throw new Exception('Livro não encontrado');
-            }
-
-            return $book;
-        } catch (Exception $e) {
-            throw $e;
+        if (!$book) {
+            throw new Exception('Livro não encontrado');
         }
+
+        return $book;
     }
 }
