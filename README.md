@@ -31,7 +31,8 @@ Clone o repositório e copie o env:
 `$ cd liberfly-test` <br />
 `$ cp .env.example .env` <br />
 
-Verifique se a porta Local 8989 está disponível <br />.
+Certifique-se que a porta Local 8989 esteja disponível <br />.
+Certifique-se que a porta Local 3306 (MySQL) esteja disponível <br />.
 
 Então, suba o container, instale as dependecias e etc:
 
