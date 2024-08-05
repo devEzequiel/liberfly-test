@@ -19,7 +19,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Post(c
      *     path="/api/v1/login",
      *     operationId="Login",
      *     tags={"Auth"},
